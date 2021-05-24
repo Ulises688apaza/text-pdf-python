@@ -45,7 +45,7 @@ def getInputUser():
         os.makedirs(dirName)
         print(Fore.GREEN + "[!] Directory " , dirName ,  " Created"+ Fore.RESET)
     except FileExistsError:
-        print(Fore.RED + "Directory " , dirName ,  " already exists" + Fore.RESET)
+        print(Fore.RED + "[X] Directory " , dirName ,  " already exists" + Fore.RESET)
 
 
     # call to fun getFilePdf
@@ -55,16 +55,16 @@ def getInputUser():
 # Read pdf Object
 def initRead(strFile):
     # Read an write Global var
-    global strPDF
+    global strPDF, fileName
     strPDF = ""
 
 # Reading pdf
-    print(Fore.YELLOW + "Reading PDF file" + Fore.RESET)
+    print(Fore.YELLOW + f"[.] Reading PDF file {fileName}" + Fore.RESET)
     pdfobj = PyPDF2.PdfFileReader(strFile)
-    print(Fore.GREEN + "READING COMPLETE" + Fore.RESET)
+    print(Fore.GREEN + "[!] READING COMPLETE" + Fore.RESET)
 
 
-    print(Fore.YELLOW + "Extracting Text"+ Fore.RESET)
+    print(Fore.YELLOW + "[.] Extracting Text"+ Fore.RESET)
     for x in range(pdfobj.numPages):
         strPDF += str(pdfobj.getPage(x).extractText())
 
@@ -72,8 +72,12 @@ def initRead(strFile):
     writeFile()
 
 def writeFile():
+    print(Fore.YELLOW + f"[.] Writing file {fileName}"+ Fore.RESET)
     file = open(f"{dirName}/{fileName}.txt", "w")
+    print(Fore.YELLOW + f"[.] File {fileName} Writted"+ Fore.RESET)
     file.write(strPDF)
+    print(Fore.GREEN + f"[!] Script finished"+ Fore.RESET)
     file.close()
 
+# Call to main fun
 getInputUser()
