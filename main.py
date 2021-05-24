@@ -7,6 +7,7 @@ from colorama import Fore, init
 # -------------
 fileName = ""
 strPDF = ""
+dirName = ""
 # -------------
 
 
@@ -16,9 +17,13 @@ init()
 
 # Get the input from user
 def getInputUser():
+    # Read an write Global var
     global fileName
+    global dirName
 
     strSplit = ""
+    dirName = "output_folder_txt"
+
     # Print input
     print(Fore.GREEN + "[!] Insert path to PDF file:" + Fore.RESET)
     inputUser = input()
@@ -34,22 +39,37 @@ def getInputUser():
 
     # Open PDF file
     pdfObj = open(inputUser, "rb")
+
+    # Create output folder if don't exists
+    try:
+        os.makedirs(dirName)
+        print(Fore.GREEN + "[!] Directory " , dirName ,  " Created"+ Fore.RESET)
+    except FileExistsError:
+        print(Fore.RED + "Directory " , dirName ,  " already exists" + Fore.RESET)
+
+
     # call to fun getFilePdf
     initRead(pdfObj)
 # -------------
 
 # Read pdf Object
 def initRead(strFile):
+    # Read an write Global var
     global strPDF
     strPDF = ""
+
+# Reading pdf
+    print("Reading PDF file")
     pdfobj = PyPDF2.PdfFileReader(strFile)
     for x in range(pdfobj.numPages):
         strPDF += str(pdfobj.getPage(x).extractText())
+
     # Call to fun to write the file
     writeFile()
 
 def writeFile():
-    file = open(f"{fileName}.txt", "w")
+    file = open(f"{dirName}/{fileName}.txt", "w")
+
     file.write(strPDF)
     file.close()
 
