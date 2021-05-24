@@ -1,6 +1,6 @@
 # text pdf python
 
-This is a script that extracts text from a PDF file
+This is a script that extracts text from a PDF file and save it in a new file .txt
 
 ## Installation
 Install the dependencies
