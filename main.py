@@ -59,8 +59,12 @@ def initRead(strFile):
     strPDF = ""
 
 # Reading pdf
-    print("Reading PDF file")
+    print(Fore.YELLOW + "Reading PDF file" + Fore.RESET)
     pdfobj = PyPDF2.PdfFileReader(strFile)
+    print(Fore.GREEN + "READING COMPLETE" + Fore.RESET)
+
+
+    print(Fore.YELLOW + "Extracting Text"+ Fore.RESET)
     for x in range(pdfobj.numPages):
         strPDF += str(pdfobj.getPage(x).extractText())
 
@@ -69,7 +73,6 @@ def initRead(strFile):
 
 def writeFile():
     file = open(f"{dirName}/{fileName}.txt", "w")
-
     file.write(strPDF)
     file.close()
 
